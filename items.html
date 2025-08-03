@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Items - Interior Design</title>
+    <link rel="stylesheet" href="home.css">
+    <header>
+        <div class="logo">
+            <img src="">
+        </div>
+
+      
+    </header>
+    <style>
+        
+        .auth-container {
+            max-width: 500px;
+            margin: 70px auto;
+            padding: 40px;
+            background-color: rgb(255, 255, 255);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .auth-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #777;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            color: #000;
+            border-bottom: 2px solid #000;
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #000;
+            outline: none;
+        }
+        
+        .auth-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .auth-button:hover {
+            background-color: #333;
+        }
+        
+        .form-footer {
+            margin-top: 20px;
+            text-align: center;
+            color: #777;
+        }
+        
+        .form-footer a {
+            color: #000;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        
+        .success-message {
+            color: #2ecc71;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+        nav ul li a {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="auth-container">
+        <div class="auth-tabs">
+            <div class="auth-tab active" data-tab="login">Вход</div>
+            <div class="auth-tab" data-tab="register">Регистрация</div>
+        </div>
+        
+        <form id="login-form" class="auth-form active">
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="login-password">Пароль</label>
+                <input type="password" id="login-password" required>
+                <div id="login-error" class="error-message"></div>
+            </div>
+            
+            <button type="submit" class="auth-button">Войти</button>
+            
+            <div class="form-footer">
+                Нет аккаунта? <a href="#" id="show-register">Зарегистрироваться</a>
+            </div>
+        </form>
+        
+        <form id="register-form" class="auth-form">
+            <div class="form-group">
+                <label for="register-name">Имя</label>
+                <input type="text" id="register-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="register-email">Email</label>
+                <input type="email" id="register-email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="register-password">Пароль</label>
+                <input type="password" id="register-password" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="register-confirm">Подтвердите пароль</label>
+                <input type="password" id="register-confirm" required>
+                <div id="register-error" class="error-message"></div>
+            </div>
+            
+            <button type="submit" class="auth-button">Зарегистрироваться</button>
+            
+            <div class="form-footer">
+                Уже есть аккаунт? <a href="#" id="show-login">Войти</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+    // Переключение между вкладками
+    const tabs = document.querySelectorAll('.auth-tab');
+    const forms = document.querySelectorAll('.auth-form');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            this.classList.add('active');
+            const tabName = this.getAttribute('data-tab');
+            document.getElementById(`${tabName}-form`).classList.add('active');
+        });
+    });
+    
+    
+    document.getElementById('show-register').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('.auth-tab[data-tab="register"]').click();
+    });
+    
+    document.getElementById('show-login').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector('.auth-tab[data-tab="login"]').click();
+    });
+    
+    //  хранилище пользователей 
+    let users = [
+        { email: 'test@example.com', password: '123456', name: 'Test User' }
+    ];
+    
+    // регистрация
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('register-name').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+        const confirmPassword = document.getElementById('register-confirm').value;
+        const errorElement = document.getElementById('register-error');
+        
+        // валидация
+        if (password !== confirmPassword) {
+            errorElement.textContent = 'Пароли не совпадают';
+            return;
+        }
+        
+        if (password.length < 6) {
+            errorElement.textContent = 'Пароль должен содержать минимум 6 символов';
+            return;
+        }
+        
+        // Проверка на существующего пользователя
+        if (users.some(user => user.email === email)) {
+            errorElement.textContent = 'Пользователь с таким email уже существует';
+            return;
+        }
+        
+        // Добавление нового пользователя
+        users.push({ name, email, password });
+        
+        // Очистка формы и сообщение об успехе
+        this.reset();
+        errorElement.textContent = 'Регистрация прошла успешно! Теперь вы можете войти.';
+        errorElement.classList.add('success-message');
+        
+        // переключение на форму входа
+        setTimeout(() => {
+            document.querySelector('.auth-tab[data-tab="login"]').click();
+            errorElement.textContent = '';
+            errorElement.classList.remove('success-message');
+        }, 3000);
+    });
+    
+    // Обработка входа
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const errorElement = document.getElementById('login-error');
+        
+        // Поиск пользователя
+        const user = users.find(user => user.email === email && user.password === password);
+        
+        if (!user) {
+            errorElement.textContent = 'Неверный email или пароль';
+            return;
+        }
+        
+     
+        sessionStorage.setItem('isLoggedIn', 'true');
+        sessionStorage.setItem('userName', user.name);
+        
+        // Перенаправление на главную страницу
+        window.location.href = 'index.html';
+    });
+    
+   
+    if (sessionStorage.getItem('isLoggedIn') === 'true') {
+        window.location.href = 'index.html';
+    }
+});
+    </script>
+
+</body>
+</html>

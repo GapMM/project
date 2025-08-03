@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kindle Candle Company - Корзина</title>
+    <link rel="stylesheet" href="korzina.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>DESIGNS COMPANY</h1>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href='index.html'>Главная</a></li>
+                <li><a href='about-us.html'>О нас</a></li>
+                <li><a href='designs.html'>Товары</a></li>
+                <li><a href='korzina.html'>Корзина (<span id="cart-count">0</span>)</a></li>
+                <li> <a href='items.html'>Регистрация</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2 class="page-title">Ваша корзина</h2>
+        
+        <div class="cart-container">
+            <div class="cart-items" id="cart-items">
+               
+                <div class="empty-cart-message">
+                    <p>Ваша корзина пуста.</p>
+                    <a href="designs.html" class="continue-shopping">Продолжить покупки</a>
+                </div>
+            </div>
+            
+            <div class="cart-summary">
+                <h3>Итого</h3>
+                <div class="summary-row">
+                    <span>Сумма</span>
+                    <span id="subtotal">0 ₽</span>
+                </div>
+                <div class="summary-row">
+                    <span>Доставка</span>
+                    <span>Бесплатно</span>
+                </div>
+                <div class="summary-row total">
+                    <span>К оплате</span>
+                    <span id="total">0 ₽</span>
+                </div>
+                <button class="checkout-button" id="checkout-button">Оформить заказ</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="cart.js"></script>
+</body>
+</html>
